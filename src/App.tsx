@@ -1,34 +1,44 @@
-import { useEffect } from 'react'
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import InteractiveBackground from './components/common/InteractiveBackground/InteractiveBackground'
-import Home from './pages/Home/Home'
-import Drafter from './pages/Drafter/Drafter'
+import { useEffect } from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import InteractiveBackground from "./components/common/InteractiveBackground/InteractiveBackground";
+import Home from "./pages/Home/Home";
+import Drafter from "./pages/Drafter/Drafter";
+import LoginPage from "./pages/Login/LoginPage";
+import DraftPage from "./pages/Draft/DraftPage";
+import { usePersistUser } from "./hook/useUser";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
-
   useEffect(() => {
-    document.body.classList.add('dark')
-  })
+    document.body.classList.add("dark");
+  });
+
+  usePersistUser();
 
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        
-        <Route 
-        path="/" element={<Home />}
-        />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route 
-        path="/draft/:id" element={<Drafter />}
-        />
+          <Route path="/draft/:id" element={<Drafter />} />
 
-      </Routes>
-    </BrowserRouter>
-    <InteractiveBackground />
+          <Route
+            path="/create-room"
+            element={
+              <ProtectedRoute>
+                <DraftPage />
+              </ProtectedRoute>
+              }
+          />
+
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+      <InteractiveBackground />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
