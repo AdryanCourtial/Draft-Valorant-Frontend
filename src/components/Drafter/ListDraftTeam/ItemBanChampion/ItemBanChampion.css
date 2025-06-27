@@ -1,7 +1,7 @@
 .container-item-ban-champion {
     position: relative;
     display: flex;
-    height: 15%;
+    height: 100%;
     aspect-ratio: 1/1.2;
     border: 1px solid var(--color-white-500);
     background-repeat: no-repeat;

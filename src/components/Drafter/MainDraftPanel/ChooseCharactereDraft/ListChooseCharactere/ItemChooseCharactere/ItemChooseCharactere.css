@@ -1,0 +1,13 @@
+.container-item-list-charactere {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+}
+
+.container-item-list-charactere > img {
+    height: 80%;
+    aspect-ratio: 1 / 1;
+    object-fit: fill;
+}

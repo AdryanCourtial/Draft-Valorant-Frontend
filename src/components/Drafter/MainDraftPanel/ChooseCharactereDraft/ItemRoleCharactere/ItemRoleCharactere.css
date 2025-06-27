@@ -1,0 +1,14 @@
+.container-item-role-charactere {
+    display: flex;
+    height: 100%;
+    aspect-ratio: 1;
+    align-items: center;
+    justify-content: center;
+    border-right: solid 1px var(--color-white-500);
+
+}
+
+.container-item-role-charactere > img {
+    height: 80%;
+    aspect-ratio: 1;
+}
