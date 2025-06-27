@@ -4,6 +4,12 @@
     align-items: center;
     width: 100px;
     height: 100px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.container-item-list-charactere:hover img {
+    scale: 1.05;
 }
 
 .container-item-list-charactere > img {
