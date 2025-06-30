@@ -5,15 +5,15 @@
     width: 100px;
     height: 100px;
     cursor: pointer;
-    transition: 0.5s;
 }
 
 .container-item-list-charactere:hover img {
     scale: 1.05;
 }
 
-.container-item-list-charactere > img {
+.container-item-list-charactere img {
     height: 80%;
     aspect-ratio: 1 / 1;
     object-fit: fill;
+    transition: 0.5s;
 }

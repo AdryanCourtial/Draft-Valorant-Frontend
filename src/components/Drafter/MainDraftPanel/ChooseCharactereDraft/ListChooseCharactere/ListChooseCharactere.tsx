@@ -1,12 +1,13 @@
 import React from "react";
 import './ListChooseCharactere.css'
-import { useAtom } from "jotai";
-import { listAgentsAtom } from "../../../../../atoms/drafter";
 import ItemChooseCharactere from "./ItemChooseCharactere/ItemChooseCharactere";
+import type { Agent } from "drafter-valorant-types";
 
-const ListChooseCharactere: React.FC = () => {
+interface Props {
+    listAgents: Agent[]
+}
 
-    const [listAgents] = useAtom(listAgentsAtom)
+const ListChooseCharactere: React.FC<Props> = ({ listAgents }) => {
 
     return (
         <div className="container-list-choose-charactere">

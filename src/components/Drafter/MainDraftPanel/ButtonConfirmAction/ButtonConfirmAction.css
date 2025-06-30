@@ -8,9 +8,15 @@
 
 .button-confirm-action > button {
     all: unset;
-
+    
     background-color: var(--color-blue-500);
     padding: 10px 40px;
     margin: auto;
     font-size: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.button-confirm-action:hover button {
+    opacity: 0.6;
 }
