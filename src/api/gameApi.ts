@@ -25,3 +25,7 @@ export const joinRoom = (
     side,
   });
 };
+
+export const getRoom = (roomId: string) => {
+  socket.emit("getRoom", roomId);
+}
