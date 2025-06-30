@@ -4,8 +4,7 @@ import type { Agent } from "drafter-valorant-types";
 import { ConvertJsonTableToArray } from "../../../../utils/utils";
 
 interface Props {
-    agent?: Agent;
-    
+    agent: Agent | null;
 }
 
 const ItemPickChampion: React.FC<Props> = ({ agent }) => {

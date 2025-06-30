@@ -1,7 +1,8 @@
 import React from "react";
 import './ListBanTeam.css'
-import { GenerateArray } from "../../../utils/utils";
 import ItemBanChampion from "../ListDraftTeam/ItemBanChampion/ItemBanChampion";
+import { useAtom } from "jotai";
+import { draftRoomAtom } from "../../../atoms/drafter";
 
 interface Props {
     type: "attackers" | "defenders";
@@ -9,12 +10,19 @@ interface Props {
 
 const ListBanTeam: React.FC<Props> = ({ type }) => {
 
+    const [draftRoom, _] = useAtom(draftRoomAtom);
+    
     return (
         <div className="container-list-ban-team">
             {
-                GenerateArray(2).map((_, index) => (
-                    <ItemBanChampion key={index} />
-                ))
+                type === "attackers" ? (
+                    draftRoom?.attackers_side.bans.map((value, index) => (
+                        <ItemBanChampion key={index} agent={value} />
+                    ))
+                ) : 
+                    draftRoom?.defenders_side.bans.map((value, index) => (
+                        <ItemBanChampion key={index} agent={value} />
+                    ))
             }
         </div>
     )

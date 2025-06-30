@@ -3,7 +3,7 @@ import type { Agent } from "drafter-valorant-types";
 import './ItemBanChampion.css'
 
 interface Props {
-    agent?: Agent;
+    agent: Agent | null;
 }
 
 

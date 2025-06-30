@@ -1,6 +1,8 @@
 import type { Agent, AgentRole, Room } from 'drafter-valorant-types';
 import { atom } from 'jotai';
 
+export const draftRoomAtom = atom< Room | null>(null);
+
 export const listAgentsAtom = atom<Agent[]>([]);
 
 export const listRolesAtom = atom<AgentRole[]>([]);
