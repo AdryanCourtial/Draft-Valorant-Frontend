@@ -35,11 +35,14 @@ const Drafter: React.FC = () => {
     return (
         <main>
             <div className="container-drafter">
+
                 <ListDraftTeam type="attackers"/>
-                <MainDraftPanel /> 
+                <MainDraftPanel />
                 <ListDraftTeam type="defenders" />
+
             </div>
             <div className="container-drafter-b">
+
                 <ListBanTeam type="attackers"/>
                 <ButtonConfirmAction />
                 <ListBanTeam type="defenders" />

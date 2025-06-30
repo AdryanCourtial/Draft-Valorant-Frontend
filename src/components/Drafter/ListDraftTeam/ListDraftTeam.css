@@ -1,5 +1,6 @@
 .container-list-draft-team {
     width: 100%;
+    min-width: 30vw;
     height: 100%;
     display: flex;
     flex-direction: column;
