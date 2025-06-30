@@ -12,10 +12,12 @@ main {
 }
 
 .container-drafter {
-    display: grid;
+    display: flex;
     grid-row: 1;
     grid-column: 1 / -1; /* s’étend sur les 3 colonnes */
-    grid-template-columns: 1fr auto 1fr;
+    /* grid-template-columns: 1fr auto 1fr; */
+    flex-direction: row;
+    justify-content: space-evenly;
 
 }
 
