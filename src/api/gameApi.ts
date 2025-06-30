@@ -29,3 +29,8 @@ export const joinRoom = (
 export const getRoom = (roomId: string) => {
   socket.emit("getRoom", roomId);
 }
+
+// useSocketDraft.ts
+export const isReady = (roomId: string, side: "attackers_side" | "defenders_side") => {
+  socket.emit("setReady", { roomId, side });
+};

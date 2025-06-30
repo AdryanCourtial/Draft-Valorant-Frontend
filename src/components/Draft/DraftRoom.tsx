@@ -4,7 +4,7 @@ import { useSocketDraft } from "../../hook/useGame";
 import { useEffect } from "react";
 
 const DraftRoom = () => {
-  const { draftRoom, handleJoinSide, handleGetRoom } = useSocketDraft();
+  const { draftRoom, handleJoinSide, handleGetRoom, handleIsReady } = useSocketDraft();
   const [infoUser] = useAtom(userAtom);
 
   useEffect(() => {
@@ -16,7 +16,10 @@ const DraftRoom = () => {
     }
   }, [draftRoom, handleGetRoom]);
 
-  if (!draftRoom) return <div>Room introuvable ou chargement...</div>;
+  if (!draftRoom ) return <div>Room introuvable ou chargement...</div>;
+
+  const isLeaderAttackers = draftRoom.attackers_side.team_leader === infoUser?.id;
+  const isLeaderDefenders = draftRoom.defenders_side.team_leader === infoUser?.id;
 
   return (
     <div>
@@ -26,7 +29,7 @@ const DraftRoom = () => {
 
       <button
         onClick={() =>
-          handleJoinSide(draftRoom.uuid, infoUser.id, "attackers_side")
+          handleJoinSide(draftRoom.uuid, infoUser?.id ?? 0, "attackers_side")
         }
       >
         Rejoindre Attaquants
@@ -34,11 +37,27 @@ const DraftRoom = () => {
 
       <button
         onClick={() =>
-          handleJoinSide(draftRoom.uuid, infoUser.id, "defenders_side")
+          handleJoinSide(draftRoom.uuid, infoUser?.id ?? 0, "defenders_side")
         }
       >
         Rejoindre Défenseurs
       </button>
+
+      {isLeaderAttackers && !draftRoom.attackers_side.isReady && (
+        <button
+          onClick={() => handleIsReady(draftRoom.uuid, "attackers_side")}
+        >
+          Prêt côté Attaquants
+        </button>
+      )}
+
+      {isLeaderDefenders && !draftRoom.defenders_side.isReady && (
+        <button
+          onClick={() => handleIsReady(draftRoom.uuid, "defenders_side")}
+        >
+          Prêt côté Défenseurs
+        </button>
+      )}
 
       <pre>{JSON.stringify(draftRoom, null, 2)}</pre>
     </div>
