@@ -13,3 +13,15 @@ export const createRoom = (
     creatorId,
   });
 };
+
+export const joinRoom = (
+  roomId: string,
+  userId: number,
+  side: "attackers_side" | "defenders_side"
+) => {
+  socket.emit("join-side", {
+    roomId,
+    userId,
+    side,
+  });
+};

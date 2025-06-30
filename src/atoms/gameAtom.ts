@@ -1,4 +1,4 @@
 import { atom } from "jotai";
-import type { DraftRoom } from "../types/draft.interface";
+import type { Room } from "drafter-valorant-types";
 
-export const draftRoomAtom = atom<DraftRoom | null>(null);
+export const draftRoomAtom = atom< Room | null>(null);

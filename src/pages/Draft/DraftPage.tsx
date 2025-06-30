@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { userAtom } from "../../atoms/userAtom";
-import DraftRoom from "../../components/Draft/DraftRoom";
+import CreateRoom from "../../components/Draft/CreateRoom";
 
 const DraftPage = () => {
   const [infoUser] = useAtom(userAtom);
@@ -11,7 +11,7 @@ const DraftPage = () => {
         Bienvenue sur la Draft Page {infoUser?.username}
       </h1>
       <p className="text-lg">This is the draft page content.</p>
-      <DraftRoom />
+      <CreateRoom />
     </div>
   );
 };
