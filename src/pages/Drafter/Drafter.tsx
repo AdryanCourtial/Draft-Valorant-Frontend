@@ -8,6 +8,7 @@ import MainDraftPanel from "../../components/Drafter/MainDraftPanel/MainDraftPan
 import { fetchAllRoles } from "../../api/roles";
 import ButtonConfirmAction from "../../components/Drafter/MainDraftPanel/ButtonConfirmAction/ButtonConfirmAction";
 import ListBanTeam from "../../components/Drafter/ListBanTeam/ListBanTeam";
+import { socket } from "../../config/socket.config";
 
 const Drafter: React.FC = () => {
 
@@ -17,12 +18,12 @@ const Drafter: React.FC = () => {
 
     useEffect(() => {
 
-
         Promise.all([ fetchAllAgents(), fetchAllRoles() ]).then(([agents, roles]) => {
             setListAgents(agents)
             setListRoles(roles)
         })
 
+        socket.emit('getRoom', {  })
         
     }, [])
     
@@ -36,14 +37,14 @@ const Drafter: React.FC = () => {
         <main>
             <div className="container-drafter">
 
-                <ListDraftTeam type="attackers"/>
+                <ListDraftTeam type="attackers" />
                 <MainDraftPanel />
                 <ListDraftTeam type="defenders" />
 
             </div>
             <div className="container-drafter-b">
 
-                <ListBanTeam type="attackers"/>
+                <ListBanTeam type="attackers" />
                 <ButtonConfirmAction />
                 <ListBanTeam type="defenders" />
 
