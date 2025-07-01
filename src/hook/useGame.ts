@@ -1,27 +1,63 @@
 import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
-import { draftRoomAtom } from "../atoms/gameAtom";
-import { createRoom, getRoom, isReady, joinRoom } from "../api/gameApi";
-import type { Room } from "drafter-valorant-types";
+import { draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
+import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady } from "../api/gameApi";
+import type { Agent, Room, SocketError } from "drafter-valorant-types";
+import { toast } from "react-toastify";
+import { ArrayOfChampRegistered } from "../utils/utils";
+import { userAtom } from "../atoms/userAtom";
 
 export const useSocketDraft = () => {
   const [draftRoom, setDraftRoom] = useAtom(draftRoomAtom);
+  const [timer, setTimer] = useAtom(timerAtom)
+  const [, setListAgentsAlreadyPicked] = useAtom(listAgentsAlreadyPickedAtom)
+  const [_, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
+  const [infoUser] = useAtom(userAtom);
+  
 
   useEffect(() => {
+    console.log(draftRoom?.uuid)
+    socket.emit('getRoom', { roomId: draftRoom?.uuid })
+
     socket.on("room-created", (room: Room) => {
       console.log("✅ Room created :", room);
       setDraftRoom(room);
     });
 
-    
     socket.on("room-updated", (room: Room) => {
       console.log("🔄 Room updated :", room);
       setDraftRoom(room);
     });
 
-    socket.on("error", (error: string) => {
+    socket.on("start-draft", (room: Room) => {
+      console.log("🔄 Début de la draft", room);
+      setDraftRoom(room);
+    });
+
+    socket.on("timer-update", (timeLeft: number) => {
+      console.log(timeLeft)
+      setTimer(timeLeft)
+    })
+
+    socket.on("agent-picked", (room: Room) => {
+      console.log("🔄 Round Acutalisé pour tous", room);
+      setDraftRoom(room);
+
+      let array_id: number[] = []
+
+      ArrayOfChampRegistered(room).forEach((value) => {
+          if (value) {
+              array_id.push(value.id)
+          }
+      })
+
+      setListAgentsAlreadyPicked(array_id)
+    });
+
+    socket.on("room-error", (error: SocketError) => {
       console.error("❌ Room error :", error);
+      toast(error.message);
     });
 
     return () => {
@@ -29,7 +65,9 @@ export const useSocketDraft = () => {
       socket.off("room-updated");
       socket.off("room-error");
     };
-  }, [ setDraftRoom ]);
+  }, []);
+
+  /** FONCTION POUR POUR LES EMITS */
 
   const handleCreateRoom = (
     mapId: string,
@@ -42,11 +80,31 @@ export const useSocketDraft = () => {
 
   const handleJoinSide = (
     roomId: string,
-    userId: number,
+    userId: number | undefined,
     side: "attackers_side" | "defenders_side"
   ) => {
+    if (!infoUser) return toast("Vous devez être connecté pour rejoindre un side")
     joinRoom(roomId, userId, side);
+    setTogglePopinChooseSide(false)
   };
+
+  // const isReady = (room: Room) => {
+  //   console.log("isReady called with room:", room);
+  //   startDraft(room.uuid);
+  // }
+
+  const nextRound = (room: Room, agent: Agent | null) => {
+
+    console.log(agent)
+    
+    if (!agent) {
+      console.error("Agent is required to confirm the round.");
+      return;
+    }
+    
+    console.log("Confirm round Round for", room);
+    confirmRound(room.uuid, agent);
+  }
 
   const handleGetRoom = (roomId: string) => {
     getRoom(roomId);
@@ -58,5 +116,5 @@ export const useSocketDraft = () => {
   ) => {
     isReady(roomId, side);
   }
-  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, draftRoom };
+  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, draftRoom, isReady, nextRound, setDraftRoom };
 };

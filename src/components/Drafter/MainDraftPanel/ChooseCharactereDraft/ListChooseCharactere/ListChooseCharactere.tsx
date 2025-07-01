@@ -1,4 +1,3 @@
-import React from "react";
 import './ListChooseCharactere.css'
 import ItemChooseCharactere from "./ItemChooseCharactere/ItemChooseCharactere";
 import type { Agent } from "drafter-valorant-types";

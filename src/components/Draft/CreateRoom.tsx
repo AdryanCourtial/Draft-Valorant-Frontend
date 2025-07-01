@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSocketDraft } from "../../hook/useGame";
 import CreateRoomForm from "./Form/CreateRoomForm";
+import { useAuth } from "../../hook/useAuth";
 
 const CreateRoom = () => {
-  const { handleCreateRoom, draftRoom } = useSocketDraft();
+  const { handleCreateRoom, draftRoom,  } = useSocketDraft();
+  const {handleLogout } = useAuth()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,12 +18,7 @@ const CreateRoom = () => {
   return (
     <div>
       <CreateRoomForm handleCreateRoom={handleCreateRoom} />
-      {draftRoom && (
-        <>
-          <h2>Room créée ✅</h2>
-          <pre>{JSON.stringify(draftRoom, null, 2)}</pre>
-        </>
-      )}
+      <button onClick={handleLogout}> Logout </button>
     </div>
   );
 };

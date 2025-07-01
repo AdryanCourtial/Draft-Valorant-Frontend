@@ -1,3 +1,4 @@
+import type { Agent } from "drafter-valorant-types";
 import { socket } from "../config/socket.config";
 
 export const createRoom = (
@@ -16,7 +17,7 @@ export const createRoom = (
 
 export const joinRoom = (
   roomId: string,
-  userId: number,
+  userId: number | undefined,
   side: "attackers_side" | "defenders_side"
 ) => {
   socket.emit("join-side", {
@@ -28,6 +29,15 @@ export const joinRoom = (
 
 export const getRoom = (roomId: string) => {
   socket.emit("getRoom", roomId);
+}
+
+export const startDraft = (roomId: string) => {
+  console.log("Starting draft for room:", roomId);
+  socket.emit("test-is-ready", { roomId });
+}
+
+export const confirmRound = (roomId: string, agent: Agent) => {
+  socket.emit("confirm-round", { roomId, agent });
 }
 
 // useSocketDraft.ts

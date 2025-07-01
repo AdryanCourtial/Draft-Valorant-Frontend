@@ -1,6 +1,7 @@
 import React from "react";
 import './MainDraftPanel.css'
 import ChooseCharactereDraft from "./ChooseCharactereDraft/ChooseCharactereDraft";
+import TimerPanel from "./TimerPanel/TimerPanel";
 
 const MainDraftPanel: React.FC = () => {
 
@@ -11,8 +12,7 @@ const MainDraftPanel: React.FC = () => {
                 <img className="container-splash-map" src="https://media.valorant-api.com/maps/d960549e-485c-e861-8d71-aa9d1aed12a2/splash.png" alt="" />
             </div>
             <div className="container-timer">
-                <p> 29 </p>
-                <hr />
+                <TimerPanel />
             </div>
             <ChooseCharactereDraft />
         </div>
