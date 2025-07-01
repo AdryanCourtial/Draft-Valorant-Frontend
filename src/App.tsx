@@ -7,8 +7,8 @@ import LoginPage from "./pages/Login/LoginPage";
 import DraftPage from "./pages/Draft/DraftPage";
 import { usePersistUser } from "./hook/useUser";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import DraftRoom from "./components/Draft/DraftRoom";
 import Drafter from "./pages/Drafter/Drafter";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   useEffect(() => {
@@ -39,6 +39,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <InteractiveBackground />
+      <ToastContainer />
     </>
   );
 }

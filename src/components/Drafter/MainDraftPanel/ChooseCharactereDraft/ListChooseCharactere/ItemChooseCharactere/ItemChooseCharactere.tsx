@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import './ItemChooseCharactere.css'
 import type { Agent } from "drafter-valorant-types";
 import { useAtom } from "jotai";
-import { agentHoveredAtom } from "../../../../../../atoms/drafter";
+import { agentHoveredAtom, listAgentsAlreadyPickedAtom } from "../../../../../../atoms/drafter";
 
 interface Props {
     agent: Agent
@@ -10,14 +10,21 @@ interface Props {
 
 const ItemChooseCharactere: React.FC<Props> = ({ agent }) => {
 
-    const [, setAgentHovered] = useAtom(agentHoveredAtom);
+    const [agentHovered, setAgentHovered] = useAtom(agentHoveredAtom);
+    const [listAgentsAlreadyPicked, ] = useAtom(listAgentsAlreadyPickedAtom)
 
     const handleHoverAgent = () => {
         setAgentHovered(agent)
     }
 
+    const isAlreadyPicked =  listAgentsAlreadyPicked.includes(agent.id)
+
     return (
-        <div className="container-item-list-charactere" onClick={handleHoverAgent}>
+        <div className="container-item-list-charactere" onClick={isAlreadyPicked ? undefined : handleHoverAgent}
+        style={{
+            opacity: isAlreadyPicked ? "0.2" : "1",
+            backgroundColor: (agentHovered?.id ?? 0) === agent.id ? "var(--color-red-500)" : "transparent"
+        }}>
 
             <img src={agent.displayIcon} alt="" />
 

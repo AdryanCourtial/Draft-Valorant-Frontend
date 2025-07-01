@@ -10,3 +10,7 @@ export const listRolesAtom = atom<AgentRole[]>([]);
 export const agentHoveredAtom = atom<Agent | null>(null);
 
 export const roomObject = atom<Room>();
+
+export const timerAtom = atom<number>();
+
+export const listAgentsAlreadyPickedAtom = atom<number[]>([])

@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
-import { draftRoomAtom } from "../atoms/drafter";
+import { draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom } from "../atoms/drafter";
 import { confirmRound, createRoom, getRoom, joinRoom, startDraft } from "../api/gameApi";
-import type { Agent, Room } from "drafter-valorant-types";
+import type { Agent, Room, SocketError } from "drafter-valorant-types";
+import { toast } from "react-toastify";
+import { ArrayOfChampRegistered } from "../utils/utils";
 
 export const useSocketDraft = () => {
   const [draftRoom, setDraftRoom] = useAtom(draftRoomAtom);
+  const [timer, setTimer] = useAtom(timerAtom)
+  const [, setListAgentsAlreadyPicked] = useAtom(listAgentsAlreadyPickedAtom)
+  
 
   useEffect(() => {
 
@@ -27,13 +32,29 @@ export const useSocketDraft = () => {
       setDraftRoom(room);
     });
 
+    socket.on("timer-update", (timeLeft: number) => {
+      console.log(timeLeft)
+      setTimer(timeLeft)
+    })
+
     socket.on("agent-picked", (room: Room) => {
       console.log("🔄 Round Acutalisé pour tous", room);
       setDraftRoom(room);
+
+      let array_id: number[] = []
+
+      ArrayOfChampRegistered(room).forEach((value) => {
+          if (value) {
+              array_id.push(value.id)
+          }
+      })
+
+      setListAgentsAlreadyPicked(array_id)
     });
 
-    socket.on("room-error", (error: string) => {
+    socket.on("room-error", (error: SocketError) => {
       console.error("❌ Room error :", error);
+      toast(error.message);
     });
 
     return () => {
