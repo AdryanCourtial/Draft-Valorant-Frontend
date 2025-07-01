@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
 import { draftRoomAtom } from "../atoms/gameAtom";
-import { createRoom, getRoom, isReady, joinRoom } from "../api/gameApi";
+import { createRoom, endGame, getRoom, isReady, joinRoom, mockRoom } from "../api/gameApi";
 import type { Room } from "drafter-valorant-types";
 
 export const useSocketDraft = () => {
@@ -58,5 +58,13 @@ export const useSocketDraft = () => {
   ) => {
     isReady(roomId, side);
   }
-  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, draftRoom };
+
+  const handleEndGame = (roomId: string) => {
+    endGame(roomId);
+  }
+  
+  const handleMockRoom = () => {
+    mockRoom()
+  }
+  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, handleMockRoom, draftRoom };
 };
