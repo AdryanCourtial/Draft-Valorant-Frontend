@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import './Drafter.css'
+import "./Drafter.css";
 import { useAtom } from "jotai";
 import { listAgentsAtom, listRolesAtom } from "../../atoms/drafter";
 import { fetchAllAgents } from "../../api/agents";
@@ -10,46 +10,35 @@ import ButtonConfirmAction from "../../components/Drafter/MainDraftPanel/ButtonC
 import ListBanTeam from "../../components/Drafter/ListBanTeam/ListBanTeam";
 
 const Drafter: React.FC = () => {
+  const [listAgents, setListAgents] = useAtom(listAgentsAtom);
+  const [listRoles, setListRoles] = useAtom(listRolesAtom);
 
-    const [listAgents, setListAgents] = useAtom(listAgentsAtom)
-    const [listRoles, setListRoles] = useAtom(listRolesAtom)
+  useEffect(() => {
+    Promise.all([fetchAllAgents(), fetchAllRoles()]).then(([agents, roles]) => {
+      setListAgents(agents);
+      setListRoles(roles);
+    });
+  }, []);
 
+  useEffect(() => {
+    console.log("List of agents updated:", listAgents);
+    console.log("List of roles updated:", listRoles);
+  }, [listAgents, listRoles]);
 
-    useEffect(() => {
-
-
-        Promise.all([ fetchAllAgents(), fetchAllRoles() ]).then(([agents, roles]) => {
-            setListAgents(agents)
-            setListRoles(roles)
-        })
-
-        
-    }, [])
-    
-    useEffect(() => {
-        console.log("List of agents updated:", listAgents);
-        console.log("List of roles updated:", listRoles);
-
-    }, [listAgents, listRoles])
-
-    return (
-        <main>
-            <div className="container-drafter">
-
-                <ListDraftTeam type="attackers"/>
-                <MainDraftPanel />
-                <ListDraftTeam type="defenders" />
-
-            </div>
-            <div className="container-drafter-b">
-
-                <ListBanTeam type="attackers"/>
-                <ButtonConfirmAction />
-                <ListBanTeam type="defenders" />
-
-            </div>
-        </main>
-    )
-}
+  return (
+    <main>
+      <div className="container-drafter">
+        <ListDraftTeam type="attackers" />
+        <MainDraftPanel />
+        <ListDraftTeam type="defenders" />
+      </div>
+      <div className="container-drafter-b">
+        <ListBanTeam type="attackers" />
+        <ButtonConfirmAction />
+        <ListBanTeam type="defenders" />
+      </div>
+    </main>
+  );
+};
 
 export default Drafter;

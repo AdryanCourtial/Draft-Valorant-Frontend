@@ -9,6 +9,7 @@ import DraftPage from "./pages/Draft/DraftPage";
 import { usePersistUser } from "./hook/useUser";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import DraftRoom from "./components/Draft/DraftRoom";
+import RegisterPage from "./pages/Register/RegisterPage";
 
 function App() {
   useEffect(() => {
@@ -31,11 +32,13 @@ function App() {
               <ProtectedRoute>
                 <DraftPage />
               </ProtectedRoute>
-              }
+            }
           />
           <Route path="/draft/:id" element={<DraftRoom />} />
 
           <Route path="/login" element={<LoginPage />} />
+
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
       <InteractiveBackground />

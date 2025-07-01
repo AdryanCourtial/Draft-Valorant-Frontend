@@ -15,3 +15,19 @@ export const login = async (email: string, password: string): Promise<User> => {
     token: res.data.token,
   };
 };
+
+
+export const register = async (email: string, username: string, password: string,): Promise<User> => {
+  const res = await axiosClient.post(`/user/`, {
+    email,
+    username,
+    password,
+  });
+
+  return {
+    id: res.data.user.id,
+    username: res.data.user.username,
+    email: res.data.user.email,
+    token: res.data.token,
+  };
+};
