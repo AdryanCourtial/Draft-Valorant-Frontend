@@ -9,27 +9,23 @@ import { fetchAllRoles } from "../../api/roles";
 import ButtonConfirmAction from "../../components/Drafter/MainDraftPanel/ButtonConfirmAction/ButtonConfirmAction";
 import ListBanTeam from "../../components/Drafter/ListBanTeam/ListBanTeam";
 import { useSocketDraft } from "../../hook/useGame";
-import type { ButtonFrontState } from "drafter-valorant-types";
 import { socket } from "../../config/socket.config";
-import { useBeforeUnload } from "react-router-dom";
+import { Link, useBeforeUnload } from "react-router-dom";
 import { userAtom } from "../../atoms/userAtom";
 import Popin from "../../components/Popin/Popin";
 import ButtonChooseSide from "../../components/Drafter/ButtonChooseSide/ButtonChooseSide";
 import { fetchAllMaps } from "../../api/map";
+import Loader from "../../components/common/Loader/Loader";
 
 const Drafter: React.FC = () => {
 
     const [, setListAgents] = useAtom(listAgentsAtom)
     const [, setListRoles] = useAtom(listRolesAtom)
     const [, setListMaps] = useAtom(listMapsAtom)
-    const [agentHovered, ] = useAtom(agentHoveredAtom)
     const [infoUser] = useAtom(userAtom);
     const [togglePopinChooseSide, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
     const [_, setCurentSideToPlay] = useAtom(curentSideToPlayAtom)
     const [roleInRoom, setRoleInRoom] = useAtom(roleInRoomAtom)
-
-
-    const [buttonState, setButtonState] = useState<ButtonFrontState>()
 
     const { handleGetRoom,  draftRoom, nextRound, handleIsReady, handleJoinSide} = useSocketDraft();
 
@@ -48,7 +44,16 @@ const Drafter: React.FC = () => {
           setListMaps(maps)
       })
 
+
     }, [])
+
+    useEffect(() => {
+      if (draftRoom) {
+        if (draftRoom?.attackers_side.team_leader === infoUser?.id || draftRoom?.defenders_side.team_leader === infoUser?.id) {
+          setTogglePopinChooseSide(false)
+        }
+      }
+    }, [draftRoom])
 
     useBeforeUnload(() => {
         socket.emit('leaveAllRooms')
@@ -57,7 +62,7 @@ const Drafter: React.FC = () => {
     useMemo(() => {
 
       const curentTurn = draftRoom?.draft_session.draft_actions.find((value) => value.turn === draftRoom.draft_session.curent_turn)
-      setCurentSideToPlay(curentTurn?.team)
+      setCurentSideToPlay(curentTurn)
 
       if (draftRoom?.attackers_side.team_leader === infoUser?.id) {
         setRoleInRoom("attackers_side")
@@ -71,37 +76,60 @@ const Drafter: React.FC = () => {
     
 
     return (
+      <>
+      { draftRoom ? (
+        <>
         <main>
-            <div className="container-drafter">
+          <div className="container-drafter">
 
-                <ListDraftTeam type="attackers" />
-                <MainDraftPanel />
-                <ListDraftTeam type="defenders" />
+              <ListDraftTeam type="attackers_side" />
+              <MainDraftPanel />
+              <ListDraftTeam type="defenders_side" />
 
-            </div>
-            <div className="container-drafter-b">
+          </div>
+          <div className="container-drafter-b">
 
-                <ListBanTeam type="attackers" />
-                {
-                  roleInRoom === "spectate" ? (
-                    <p> Spectate </p>
-                  ) :  <ButtonConfirmAction confirmActon={nextRound} handleIsReady={handleIsReady} />
-                }
-                <ListBanTeam type="defenders" />
-
-            </div>
-            <Popin toggle={togglePopinChooseSide} >
+              <ListBanTeam type="attackers" />
               {
-                draftRoom ? (
-                  <>
-                    <ButtonChooseSide title="Attackers Side" action={() => handleJoinSide(draftRoom?.uuid, infoUser?.id, "attackers_side")} />
-                    <ButtonChooseSide title="Spectate" action={() => setTogglePopinChooseSide(false)}/>
-                    <ButtonChooseSide title="Defenders Side" action={() => handleJoinSide(draftRoom?.uuid, infoUser?.id, "defenders_side")} />
-                  </>
-                ) : null
+                roleInRoom === "spectate" ? (
+                  <p> Spectate </p>
+                ) :  <ButtonConfirmAction confirmActon={nextRound} handleIsReady={handleIsReady} />
               }
-            </Popin>
-        </main>
+              <ListBanTeam type="defenders" />
+
+          </div>
+          <Popin toggle={togglePopinChooseSide} >
+            {
+              draftRoom ? (
+                <>
+                <div className="container-popup">
+                  <div className="container-popup-info">
+                    <h1> Select a role : </h1>
+                    {
+                      !infoUser ? (
+                        <p> You need to be <Link to={"/login"}>authentificated</Link> for join a side </p>
+                      ) : <p> Login as : <strong>{infoUser.username}</strong></p>
+                    }
+                    
+                  </div>
+                  <div className="container-popup-button">
+                    <ButtonChooseSide type="attackers_side" action={() => handleJoinSide(draftRoom?.uuid, infoUser?.id, "attackers_side")} />
+                    <ButtonChooseSide type="spectate" action={() => setTogglePopinChooseSide(false)}/>
+                    <ButtonChooseSide type="defenders_side" action={() => handleJoinSide(draftRoom?.uuid, infoUser?.id, "defenders_side")} />
+                  </div>
+                </div>
+                </>
+              ) : null
+            }
+          </Popin>
+      </main>
+        </>
+        ) : <div className="container-loader-main">
+            <Loader />
+          </div>
+      }
+      </>
+          
     )
 }
 

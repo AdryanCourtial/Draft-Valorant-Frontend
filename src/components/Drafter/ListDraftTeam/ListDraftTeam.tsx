@@ -3,32 +3,31 @@ import './ListDraftTeam.css'
 import ItemPickChampion from "./ItemPickChampion/ItemPickChampion";
 import { useAtom } from "jotai";
 import { draftRoomAtom } from "../../../atoms/drafter";
+import type { SideTeam } from "drafter-valorant-types";
 
 interface Props {
-    type: "attackers" | "defenders";
+    type: SideTeam;
 }
 
 const ListDraftTeam: React.FC<Props> = ({ type }) => {
-
-    // const [listAgent] = useAtom(listAgentsAtom)
 
     const [draftRoom, _] = useAtom(draftRoomAtom);
 
     return (
         <div className="container-list-draft-team"
         style={{
-            alignItems: type === "attackers" ? "flex-start" : "flex-end"
+            alignItems: type === "attackers_side" ? "flex-start" : "flex-end"
         }}>
             {
                 draftRoom ? (
 
-                    type === "attackers" ? (
+                    type === "attackers_side" ? (
                         draftRoom?.attackers_side.agents.map((value, index) => (
-                            <ItemPickChampion key={index} agent={value} />
+                            <ItemPickChampion key={index} agent={value} type={type} placement={index}/>
                         ))
                     ) : 
                         draftRoom?.defenders_side.agents.map((value, index) => (
-                            <ItemPickChampion key={index} agent={value} />
+                            <ItemPickChampion key={index} agent={value} type={type} placement={index} />
                         ))
                 ) : null
             }

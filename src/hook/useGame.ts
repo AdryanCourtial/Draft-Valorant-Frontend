@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
 import { agentHoveredAtom, draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
-import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady, endGame } from "../api/gameApi";
+import { confirmRound, createRoom, getRoom, joinRoom, isReady, endGame } from "../api/gameApi";
 import type { Agent, Room, SocketError } from "drafter-valorant-types";
 import { toast } from "react-toastify";
 import { ArrayOfChampRegistered } from "../utils/utils";
@@ -18,11 +18,9 @@ export const useSocketDraft = () => {
   
 
   useEffect(() => {
-    console.log(draftRoom?.uuid)
     socket.emit('getRoom', { roomId: draftRoom?.uuid })
 
     socket.on("room-created", (room: Room) => {
-      console.log("✅ Room created :", room);
       setDraftRoom(room);
     });
 
@@ -32,17 +30,23 @@ export const useSocketDraft = () => {
     });
 
     socket.on("start-draft", (room: Room) => {
-      console.log("🔄 Début de la draft", room);
+      setDraftRoom(room);
+    });
+
+    socket.on("draft-ended", (room: Room) => {
+      setDraftRoom(room);
+      socket.emit("endGame", { roomId: room.uuid})
+    });
+
+    socket.on("gameResult", (room: Room) => {
       setDraftRoom(room);
     });
 
     socket.on("timer-update", (timeLeft: number) => {
-      console.log(timeLeft)
       setTimer(timeLeft)
     })
 
     socket.on("agent-picked", (room: Room) => {
-      console.log("🔄 Round Acutalisé pour tous", room);
       setDraftRoom(room);
 
       let array_id: number[] = []

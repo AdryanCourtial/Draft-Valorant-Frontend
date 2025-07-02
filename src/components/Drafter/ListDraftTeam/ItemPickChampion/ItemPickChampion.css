@@ -6,6 +6,8 @@
     /* aspect-ratio: 3/1; */
     border: 1px solid var(--color-white-500);
     overflow: hidden;
+    transition: 0.5s;
+
 }
 
 .img-item-pick-champion {
@@ -25,4 +27,26 @@
     background-repeat: no-repeat;
     background-size: 80%;
     background-position: center;
+}
+
+@keyframes border-glow {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-red-500), inset 0 0 0 0 var(--color-red-500);
+  }
+  25% {
+    box-shadow: 0 0 10px 4px var(--color-red-500), inset 0 0 2px 2px var(--color-red-500);
+  }
+  50% {
+    box-shadow: 0 0 14px 6px var(--color-red-500), inset 0 0 3px 3px var(--color-red-500);
+  }
+  75% {
+    box-shadow: 0 0 10px 4px var(--color-red-500), inset 0 0 2px 2px var(--color-red-500);
+  }
+  100% {
+    box-shadow: 0 0 0 0 var(--color-red-500), inset 0 0 0 0 var(--color-red-500);
+  }
+}
+
+.animate-border-glow {
+  animation: border-glow 1s infinite linear;
 }

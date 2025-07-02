@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  transition: 0.5s;
 }
 
 ::-webkit-scrollbar {
@@ -45,6 +46,11 @@ body, :root {
   max-height: 100vh;
   max-width: 100vw;
 }
+
+a {
+  color: var(--color-blue-500);
+}
+
 
 /**  Typography styles */
 

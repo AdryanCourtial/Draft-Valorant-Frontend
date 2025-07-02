@@ -85,7 +85,7 @@ const ButtonConfirmAction: React.FC<Props>= ({ handleIsReady, confirmActon }) =>
 
     const buttonStyle = (): React.CSSProperties => {
 
-        const yourTurn = curentSideToPlay === roleInRoom
+        const yourTurn = curentSideToPlay?.team === roleInRoom
         const stateRoomWaiting = draftRoom?.state === "waiting"
 
         const opacity = () => {
@@ -104,7 +104,7 @@ const ButtonConfirmAction: React.FC<Props>= ({ handleIsReady, confirmActon }) =>
 
     return (
         <>
-        { curentSideToPlay === roleInRoom || draftRoom?.state === "waiting" ? (
+        { curentSideToPlay?.team === roleInRoom || draftRoom?.state === "waiting" ? (
             <div className="button-confirm-action" onClick={button.action} style={buttonStyle()}>
                 <button> {button.title} </button>
             </div>
