@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './ButtonConfirmAction.css'
 import { agentHoveredAtom, curentSideToPlayAtom, draftRoomAtom, roleInRoomAtom } from "../../../../atoms/drafter";
 import { userAtom } from "../../../../atoms/userAtom";
@@ -13,7 +13,7 @@ const ButtonConfirmAction: React.FC<Props>= ({ handleIsReady, confirmActon }) =>
 
     const [agentHovered, ] = useAtom(agentHoveredAtom)
     const [infoUser] = useAtom(userAtom);
-    const [roleInRoom, setRoleInRoom] = useAtom(roleInRoomAtom)
+    const [roleInRoom] = useAtom(roleInRoomAtom)
     const [draftRoom] = useAtom(draftRoomAtom)
     const [curentSideToPlay] = useAtom(curentSideToPlayAtom)
 

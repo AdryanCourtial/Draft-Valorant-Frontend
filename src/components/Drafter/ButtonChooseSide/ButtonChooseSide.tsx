@@ -1,4 +1,4 @@
-import type { Side, SideTeam } from "drafter-valorant-types";
+import type { SideTeam } from "drafter-valorant-types";
 import "./ButtonChooseSide.css"
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";

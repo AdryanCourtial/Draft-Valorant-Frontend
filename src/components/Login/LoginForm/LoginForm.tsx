@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useAuth } from "../../hook/useAuth";
+import { useAuth } from "../../../hook/useAuth";
+import "./LoginForm.css"
 
 const LoginForm = () => {
   const { handleLogin } = useAuth();
@@ -16,7 +17,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <div className="container-form-login">
       <h2>Connexion</h2>
       <input
         value={email}

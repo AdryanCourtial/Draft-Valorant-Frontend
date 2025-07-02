@@ -49,8 +49,13 @@ body, :root {
 
 a {
   color: var(--color-blue-500);
+  cursor: pointer;
+  transition: 0.5s;
 }
 
+a:hover {
+  opacity: 0.8;
+}
 
 /**  Typography styles */
 
