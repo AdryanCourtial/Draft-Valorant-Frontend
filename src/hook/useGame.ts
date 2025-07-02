@@ -121,5 +121,5 @@ export const useSocketDraft = () => {
     endGame(roomId);
   }
   
-  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, draftRoom };
+  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, draftRoom, nextRound };
 };
