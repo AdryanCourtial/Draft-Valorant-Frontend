@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
 import { draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
-import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady } from "../api/gameApi";
+import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady, endGame } from "../api/gameApi";
 import type { Agent, Room, SocketError } from "drafter-valorant-types";
 import { toast } from "react-toastify";
 import { ArrayOfChampRegistered } from "../utils/utils";
@@ -116,5 +116,10 @@ export const useSocketDraft = () => {
   ) => {
     isReady(roomId, side);
   }
-  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, draftRoom, isReady, nextRound, setDraftRoom };
+
+  const handleEndGame = (roomId: string) => {
+    endGame(roomId);
+  }
+  
+  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, draftRoom };
 };

@@ -8,6 +8,7 @@ export interface CreateRoomFormProps {
   }
   
  export interface MapData {
+    id: number;
     uuid: string;
     displayName: string;
     displayIcon: string;
