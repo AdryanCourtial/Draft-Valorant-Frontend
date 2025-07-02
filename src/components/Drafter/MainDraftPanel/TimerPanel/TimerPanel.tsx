@@ -12,7 +12,7 @@ const TimerPanel: React.FC = () => {
 
     return (
         <div className="container-timer">
-            <p> {timer || "Terminé"} </p>
+            <p> {timer || "0"} </p>
             <div className="timer-bar-fill" style={{ width: `${((timer ?? 0) * 100) / TIMER_DURATION}%` }} />
         </div>
     )

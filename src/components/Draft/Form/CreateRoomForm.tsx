@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../../hook/useAuth";
 import type { CreateRoomFormProps, MapData } from "../../../types/createRoom";
-import axiosClient from "../../../config/axios";
+import { fetchAllMaps } from "../../../api/map";
 
 const CreateRoomForm = ({ handleCreateRoom }: CreateRoomFormProps) => {
   const [maps, setMaps] = useState<MapData[]>([]);
@@ -11,15 +11,18 @@ const CreateRoomForm = ({ handleCreateRoom }: CreateRoomFormProps) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchMaps = async () => {
-      try {
-        const res = await axiosClient.get(`/map`);
-        setMaps(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchMaps();
+    // const fetchMaps = async () => {
+    //   try {
+    //     const res = await axiosClient.get(`/map`);
+    //     setMaps(res.data);
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
+    fetchAllMaps().then((value) => {
+      setMaps(value)
+    })
+    // fetchMaps();
   }, []);
 
   const submit = () => {

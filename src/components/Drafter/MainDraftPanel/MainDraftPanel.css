@@ -17,7 +17,7 @@
 } */
 
 .container-map-selected > img  {
-    width: 30%;
+    width: 100%;
 } 
 
 .container-map-selected {
@@ -26,4 +26,20 @@
     align-items: center;
     height: auto;
     width: 100%;
+}
+
+.container-flex-name {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.container-flex-name > p {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-family: var(--font-bold);
+    font-size: 24px;
+    transition: 0.5s;
 }
