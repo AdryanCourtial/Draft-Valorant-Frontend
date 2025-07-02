@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import './Drafter.css'
 import { useAtom } from "jotai";
-import { agentHoveredAtom, listAgentsAlreadyPickedAtom, listAgentsAtom, listRolesAtom, togglePopinChooseSideAtom } from "../../atoms/drafter";
+import { agentHoveredAtom, curentSideToPlayAtom, listAgentsAtom, listMapsAtom, listRolesAtom, roleInRoomAtom, togglePopinChooseSideAtom } from "../../atoms/drafter";
 import { fetchAllAgents } from "../../api/agents";
 import ListDraftTeam from "../../components/Drafter/ListDraftTeam/ListDraftTeam";
 import MainDraftPanel from "../../components/Drafter/MainDraftPanel/MainDraftPanel";
@@ -15,20 +15,23 @@ import { useBeforeUnload } from "react-router-dom";
 import { userAtom } from "../../atoms/userAtom";
 import Popin from "../../components/Popin/Popin";
 import ButtonChooseSide from "../../components/Drafter/ButtonChooseSide/ButtonChooseSide";
+import { fetchAllMaps } from "../../api/map";
 
 const Drafter: React.FC = () => {
 
     const [, setListAgents] = useAtom(listAgentsAtom)
     const [, setListRoles] = useAtom(listRolesAtom)
+    const [, setListMaps] = useAtom(listMapsAtom)
     const [agentHovered, ] = useAtom(agentHoveredAtom)
     const [infoUser] = useAtom(userAtom);
     const [togglePopinChooseSide, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
-
+    const [_, setCurentSideToPlay] = useAtom(curentSideToPlayAtom)
+    const [roleInRoom, setRoleInRoom] = useAtom(roleInRoomAtom)
 
 
     const [buttonState, setButtonState] = useState<ButtonFrontState>()
 
-    const { handleCreateRoom, handleGetRoom,  draftRoom, isReady, nextRound, setDraftRoom, handleIsReady, handleJoinSide} = useSocketDraft();
+    const { handleGetRoom,  draftRoom, nextRound, handleIsReady, handleJoinSide} = useSocketDraft();
 
     useEffect(() => {
 
@@ -39,41 +42,33 @@ const Drafter: React.FC = () => {
         }
       }
       
-      Promise.all([ fetchAllAgents(), fetchAllRoles() ]).then(([agents, roles]) => {
+      Promise.all([ fetchAllAgents(), fetchAllRoles(), fetchAllMaps() ]).then(([agents, roles, maps]) => {
           setListAgents(agents)
           setListRoles(roles)
+          setListMaps(maps)
       })
 
-    }, [handleGetRoom])
+    }, [])
 
     useBeforeUnload(() => {
         socket.emit('leaveAllRooms')
     })
 
-    const isLeaderAttackers = draftRoom?.attackers_side.team_leader === infoUser?.id;
-    const isLeagerDefenders = draftRoom?.defenders_side.team_leader === infoUser?.id;
-    
-
     useMemo(() => {
-        if (!draftRoom) return;
 
-        if (draftRoom?.state === 'waiting') {
-            setButtonState({
-                action: () => handleIsReady(draftRoom.uuid, isLeaderAttackers ? "attackers_side" : "defenders_side"),
-                title: isLeaderAttackers ? "Attackant Ready" : "Defenders Ready"
-            })
-        } else if (draftRoom.state === 'running') {
-            setButtonState({
-                action: () => nextRound(draftRoom, agentHovered),
-                title: "Confirmer"
-            })
-        } else {
-            setButtonState({
-                action: () => { },
-                title: "Waiting"
-            })
-        }
-    }, [draftRoom, agentHovered])
+      const curentTurn = draftRoom?.draft_session.draft_actions.find((value) => value.turn === draftRoom.draft_session.curent_turn)
+      setCurentSideToPlay(curentTurn?.team)
+
+      if (draftRoom?.attackers_side.team_leader === infoUser?.id) {
+        setRoleInRoom("attackers_side")
+      } else if (draftRoom?.defenders_side.team_leader === infoUser?.id) {
+        setRoleInRoom("defenders_side")
+      } else {
+        setRoleInRoom("spectate")
+      }
+
+    }, [draftRoom])
+    
 
     return (
         <main>
@@ -88,9 +83,9 @@ const Drafter: React.FC = () => {
 
                 <ListBanTeam type="attackers" />
                 {
-                  !isLeagerDefenders && ! isLeaderAttackers ? (
+                  roleInRoom === "spectate" ? (
                     <p> Spectate </p>
-                  ) :  <ButtonConfirmAction action={buttonState?.action} title={buttonState?.title} />
+                  ) :  <ButtonConfirmAction confirmActon={nextRound} handleIsReady={handleIsReady} />
                 }
                 <ListBanTeam type="defenders" />
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
-import { draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
+import { agentHoveredAtom, draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
 import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady, endGame } from "../api/gameApi";
 import type { Agent, Room, SocketError } from "drafter-valorant-types";
 import { toast } from "react-toastify";
@@ -12,8 +12,9 @@ export const useSocketDraft = () => {
   const [draftRoom, setDraftRoom] = useAtom(draftRoomAtom);
   const [timer, setTimer] = useAtom(timerAtom)
   const [, setListAgentsAlreadyPicked] = useAtom(listAgentsAlreadyPickedAtom)
-  const [_, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
+  const [, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
   const [infoUser] = useAtom(userAtom);
+  const [, setAgentHovered] = useAtom(agentHoveredAtom)
   
 
   useEffect(() => {
@@ -93,17 +94,17 @@ export const useSocketDraft = () => {
   //   startDraft(room.uuid);
   // }
 
-  const nextRound = (room: Room, agent: Agent | null) => {
+  const nextRound = (room: Room, agent: Agent | null, userId?: number) => {
 
-    console.log(agent)
-    
     if (!agent) {
       console.error("Agent is required to confirm the round.");
       return;
     }
     
-    console.log("Confirm round Round for", room);
-    confirmRound(room.uuid, agent);
+    confirmRound(room.uuid, agent, userId);
+    
+    setAgentHovered(null)
+
   }
 
   const handleGetRoom = (roomId: string) => {

@@ -5,9 +5,8 @@ import CreateRoomForm from "./Form/CreateRoomForm";
 import { useAuth } from "../../hook/useAuth";
 
 const CreateRoom = () => {
-  const { handleCreateRoom, draftRoom  } = useSocketDraft();
-  const { handleLogout } = useAuth()
-
+  const { handleCreateRoom, draftRoom,  } = useSocketDraft();
+  const {handleLogout } = useAuth()
   const navigate = useNavigate();
 
   useEffect(() => {

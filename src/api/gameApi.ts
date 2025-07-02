@@ -36,8 +36,8 @@ export const startDraft = (roomId: string) => {
   socket.emit("test-is-ready", { roomId });
 }
 
-export const confirmRound = (roomId: string, agent: Agent) => {
-  socket.emit("confirm-round", { roomId, agent });
+export const confirmRound = (roomId: string, agent: Agent, userId?: number) => {
+  socket.emit("confirm-round", { roomId, agent, userId });
 }
 
 // useSocketDraft.ts
