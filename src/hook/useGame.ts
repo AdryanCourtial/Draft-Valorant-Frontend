@@ -121,10 +121,6 @@ export const useSocketDraft = () => {
   const handleEndGame = (roomId: string) => {
     endGame(roomId);
   }
-
-    const handleMockRoom = () => {
-    mockRoom()
-  }
   
-  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, draftRoom, nextRound, handleMockRoom };
+  return { handleCreateRoom, handleGetRoom, handleJoinSide, handleIsReady, handleEndGame, draftRoom, nextRound };
 };
