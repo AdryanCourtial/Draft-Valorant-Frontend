@@ -45,10 +45,6 @@ export const isReady = (roomId: string, side: "attackers_side" | "defenders_side
   socket.emit("setReady", { roomId, side });
 };
 
-export const mockRoom = () => {
-  socket.emit("mockRoom");
-}
-
 
 export const endGame = (roomId: string) => {
   socket.emit("endGame", { roomId });

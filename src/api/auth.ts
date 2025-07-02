@@ -13,6 +13,7 @@ export const login = async (email: string, password: string): Promise<User> => {
     username: res.data.user.username,
     email: res.data.user.email,
     token: res.data.token,
+    drafts: res.data.user.drafts || [],
   };
 };
 
@@ -31,3 +32,7 @@ export const register = async (email: string, username: string, password: string
     token: res.data.token,
   };
 };
+
+export const logout = async (): Promise<void> => {
+  await axiosClient.post(`/auth/logout`);
+} 

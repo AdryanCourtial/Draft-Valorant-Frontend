@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
 import { agentHoveredAtom, draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
-import { confirmRound, createRoom, getRoom, joinRoom, isReady, endGame } from "../api/gameApi";
+import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady, endGame } from "../api/gameApi";
 import type { Agent, Room, SocketError } from "drafter-valorant-types";
 import { toast } from "react-toastify";
 import { ArrayOfChampRegistered } from "../utils/utils";
