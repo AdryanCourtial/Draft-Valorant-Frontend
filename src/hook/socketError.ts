@@ -9,7 +9,6 @@ export const useSocketError = () => {
   useEffect(() => {
     // Écoute l'événement "error" (ou le nom que tu as choisi côté serveur)
     socket.on("error", (err: string) => {
-      console.log("Erreur socket reçue :", err);
       setSocketError(err);
     });
 

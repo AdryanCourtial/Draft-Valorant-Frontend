@@ -16,7 +16,7 @@ const DraftRoom = () => {
     }
   }, [draftRoom, handleGetRoom]);
 
-  if (!draftRoom ) return <div>Room introuvable ou chargement...</div>;
+  if (!draftRoom ) return <div>Room not found or loading...</div>;
 
   const isLeaderAttackers = draftRoom.attackers_side.team_leader === infoUser?.id;
   const isLeaderDefenders = draftRoom.defenders_side.team_leader === infoUser?.id;
@@ -32,7 +32,7 @@ const DraftRoom = () => {
           handleJoinSide(draftRoom.uuid, infoUser?.id ?? 0, "attackers_side")
         }
       >
-        Rejoindre Attaquants
+        Join Attackers
       </button>
 
       <button
@@ -40,14 +40,14 @@ const DraftRoom = () => {
           handleJoinSide(draftRoom.uuid, infoUser?.id ?? 0, "defenders_side")
         }
       >
-        Rejoindre Défenseurs
+        Join Defenders
       </button>
 
       {isLeaderAttackers && !draftRoom.attackers_side.isReady && (
         <button
           onClick={() => handleIsReady(draftRoom.uuid, "attackers_side")}
         >
-          Prêt côté Attaquants
+          Ready for Attackers 
         </button>
       )}
 
@@ -55,7 +55,8 @@ const DraftRoom = () => {
         <button
           onClick={() => handleIsReady(draftRoom.uuid, "defenders_side")}
         >
-          Prêt côté Défenseurs
+          Ready for Defenders
+
         </button>
       )}
 

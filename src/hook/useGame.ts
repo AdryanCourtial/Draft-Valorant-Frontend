@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { socket } from "../config/socket.config";
 import { useAtom } from "jotai";
 import { agentHoveredAtom, draftRoomAtom, listAgentsAlreadyPickedAtom, timerAtom, togglePopinChooseSideAtom } from "../atoms/drafter";
-import { confirmRound, createRoom, getRoom, joinRoom, startDraft, isReady, endGame } from "../api/gameApi";
+import { confirmRound, createRoom, getRoom, joinRoom, isReady, endGame } from "../api/gameApi";
 import type { Agent, Room, SocketError } from "drafter-valorant-types";
 import { toast } from "react-toastify";
 import { ArrayOfChampRegistered } from "../utils/utils";
@@ -10,7 +10,7 @@ import { userAtom } from "../atoms/userAtom";
 
 export const useSocketDraft = () => {
   const [draftRoom, setDraftRoom] = useAtom(draftRoomAtom);
-  const [timer, setTimer] = useAtom(timerAtom)
+  const [, setTimer] = useAtom(timerAtom)
   const [, setListAgentsAlreadyPicked] = useAtom(listAgentsAlreadyPickedAtom)
   const [, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
   const [infoUser] = useAtom(userAtom);
@@ -25,7 +25,6 @@ export const useSocketDraft = () => {
     });
 
     socket.on("room-updated", (room: Room) => {
-      console.log("🔄 Room updated :", room);
       setDraftRoom(room);
     });
 
@@ -61,7 +60,6 @@ export const useSocketDraft = () => {
     });
 
     socket.on("room-error", (error: SocketError) => {
-      console.error("❌ Room error :", error);
       toast(error.message);
     });
 

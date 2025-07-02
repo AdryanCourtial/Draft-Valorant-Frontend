@@ -38,7 +38,7 @@ const MainDraftPanel: React.FC = () => {
             <div className="container-flex-name">
                 <p style={choosedColorText("attackers_side")}> {draftRoom?.attackers_side.name}</p>
                 <div className="container-map-selected">
-                    <p> Map Séléctionné </p>
+                    <p> Selected Map </p>
                     <img className="container-splash-map" src={mapUrl} alt="" />
                 </div>
                 <p style={choosedColorText("defenders_side")}>{draftRoom?.defenders_side.name}</p>
