@@ -1,4 +1,4 @@
-.container-form-login input {
+.container-form-register input {
     all: unset;
 
     border: solid 1px;
@@ -7,7 +7,7 @@
 
 }
 
-.container-form-login {
+.container-form-register {
   max-width: 400px;
   margin: 80px auto;
   padding: 32px;
@@ -18,13 +18,13 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-.container-form-login h2 {
+.container-form-register h2 {
   text-align: center;
   margin-bottom: 24px;
   font-size: 24px;
 }
 
-.container-form-login input {
+.container-form-register input {
   all: unset;
   width: 100%;
   border: 1px solid #ccc;
@@ -36,7 +36,7 @@
   transition: border 0.2s;
 }
 
-.container-form-login button {
+.container-form-register button {
   display: block;
   width: 100%;
   color: #fff;
@@ -48,17 +48,17 @@
   transition: background 0.2s;
 }
 
-.container-form-login button:hover {
+.container-form-register button:hover {
   background: #ffffff;
   color: #000000;
 }
 
-.container-form-login p {
+.container-form-register p {
   text-align: center;
   margin-top: 16px;
 }
 
-.container-form-login a {
+.container-form-register a {
   color: #007bff;
   cursor: pointer;
   text-decoration: underline;

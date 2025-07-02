@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useAuth } from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../../components/Login/LoginForm/LoginForm";
+import "./LoginPage.css"; 
+
 
 const LoginPage = () => {
   const { user } = useAuth();
@@ -15,13 +17,12 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   return (
-    <div className="login-page">
+    <div className="page-login">
       <LoginForm />
-      <p className="mt-4 text-center">
+      <p>
         Pas encore de compte ?{" "}
         <a
           onClick={() => navigate("/register")}
-          className="text-blue-500 underline"
         >
           Créez-en un
         </a>

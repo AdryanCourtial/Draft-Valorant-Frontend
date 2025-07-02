@@ -12,13 +12,13 @@ const LoginForm = () => {
       await handleLogin(email, password);
     } catch (err) {
       console.error(err);
-      alert("Erreur de connexion");
+      alert("Error during login. Please try again.");
     }
   };
 
   return (
     <div className="container-form-login">
-      <h2>Connexion</h2>
+      <h2>Connection</h2>
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -28,9 +28,9 @@ const LoginForm = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Mot de passe"
+        placeholder="Password"
       />
-      <button onClick={submit}>Se connecter</button>
+      <button onClick={submit}>Log in</button>
     </div>
   );
 };

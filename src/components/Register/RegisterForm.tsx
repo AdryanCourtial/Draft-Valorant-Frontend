@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
+import "./RegisterForm.css";
 
 const RegisterForm = () => {
   const { handleRegister } = useAuth();
@@ -15,12 +16,12 @@ const RegisterForm = () => {
       navigate("/login");
     } catch (err) {
       console.error(err);
-      alert("Erreur de connexion");
+      alert("Error during registration. Please try again.");
     }
   };
 
   return (
-    <div>
+    <div className="container-form-register">
       <h2>Créer un compte</h2>
       <input
         value={email}
@@ -36,9 +37,9 @@ const RegisterForm = () => {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Mot de passe"
+        placeholder="Password"
       />
-      <button onClick={submit}>Créer</button>
+      <button onClick={submit}>Create</button>
     </div>
   );
 };

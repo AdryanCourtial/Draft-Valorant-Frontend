@@ -25,7 +25,6 @@ export const useSocketDraft = () => {
     });
 
     socket.on("room-updated", (room: Room) => {
-      console.log("🔄 Room updated :", room);
       setDraftRoom(room);
     });
 
@@ -61,7 +60,6 @@ export const useSocketDraft = () => {
     });
 
     socket.on("room-error", (error: SocketError) => {
-      console.error("❌ Room error :", error);
       toast(error.message);
     });
 

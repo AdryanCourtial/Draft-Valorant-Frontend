@@ -27,11 +27,8 @@ const ItemPickChampion: React.FC<Props> = ({ agent, type, placement }) => {
 
     useEffect(() => {
 
-        console.log("JE SUIS L'INDEX DE DECISION")
-
         if (curentSideToPlay?.type === "pick") {
             const res = FindFirstNullInArray(draftRoom![type].agents)
-            console.log(res)
             setIndexToDisplay(res)
         } else {
             setIndexToDisplay(null)
