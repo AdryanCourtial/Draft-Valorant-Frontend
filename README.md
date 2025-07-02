@@ -18,6 +18,13 @@ Pour lancer le serveur de développement :
 npm run dev
 ```
 
+## Créer un fichier .env 
+Son contenu
+```
+VITE_APP_API_BASE_URL="http://localhost:3000/api"
+REACT_APP_SOCKET_URL="http://localhost:3000"
+```
+
 ## Description
 
 Ce projet fournit l'interface utilisateur pour l'application Valorant Draft.
