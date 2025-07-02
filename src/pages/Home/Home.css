@@ -1,0 +1,25 @@
+.container_home {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+}
+
+.container_home > img {
+    height: 128px;
+    margin: 0 auto;
+}
+
+
+.container-home-content {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container-home-content > button {
+    width: 100%;
+}

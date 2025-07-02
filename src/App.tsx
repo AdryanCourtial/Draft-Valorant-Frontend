@@ -10,7 +10,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Drafter from "./pages/Drafter/Drafter";
 import { ToastContainer } from "react-toastify";
 import RegisterPage from "./pages/Register/RegisterPage";
-import HistoryPage from "./pages/History/history";
+import HistoryPage from "./pages/History/History";
 
 function App() {
   useEffect(() => {
@@ -27,6 +27,9 @@ function App() {
 
           <Route path="/draft/:id" element={<Drafter />} />
 
+          <Route path="/draft/history/:id" element={<Drafter isHistory />} />
+
+
           <Route
             path="/create-room"
             element={
@@ -40,7 +43,12 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/history/:uuid" element={<HistoryPage />} />
+          <Route path="/history" element={
+            <ProtectedRoute>
+              <HistoryPage />
+            </ProtectedRoute>}
+          />
+
         </Routes>
       </BrowserRouter>
       <InteractiveBackground />

@@ -1,29 +1,22 @@
 
-import { useParams } from "react-router-dom";
-import { useHistory } from "../../hook/useHistory";
-import HistoryHeader from "../../components/History/HistoryHeader";
-import TeamBlock from "../../components/History/TeamBlock";
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { userAtom } from "../../atoms/userAtom";
+import Navbar from "../../components/common/Navbar/Navbar";
 
 const HistoryPage = () => {
-  const { uuid } = useParams<{ uuid: string }>();
-  const { history, loading, error } = useHistory(uuid || "");
 
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>❌ {error}</p>;
-  if (!history) return <p>Aucun historique trouvé</p>;
+  const [infoUser] = useAtom(userAtom)
+  const navigate = useNavigate()
 
   return (
     <div>
-      <HistoryHeader
-        mapId={history.mapSelected}
-        state={history.state}
-        createdAt={history.createdAt}
-      />
-
-      <div>
-        <TeamBlock side={history.attackersSide} />
-        <TeamBlock side={history.defendersSide} />
-      </div>
+        {infoUser?.drafts?.map((draft) => (
+          <button onClick={() => navigate(`/draft/history/${draft.uuid}`)}>
+            Voir la partie du {new Date(draft.createdAt).toLocaleString()}
+          </button>
+        ))}
+        <Navbar />
     </div>
   );
 };

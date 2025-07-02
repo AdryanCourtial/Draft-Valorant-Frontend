@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSocketDraft } from "../../hook/useGame";
 import CreateRoomForm from "./Form/CreateRoomForm";
 import { useAuth } from "../../hook/useAuth";
+import Navbar from "../common/Navbar/Navbar";
 
 const CreateRoom = () => {
   const { handleCreateRoom, draftRoom,  } = useSocketDraft();
@@ -18,7 +19,7 @@ const CreateRoom = () => {
   return (
     <div>
       <CreateRoomForm handleCreateRoom={handleCreateRoom} />
-      <button onClick={handleLogout}> Logout </button>
+      <Navbar />
     </div>
   );
 };

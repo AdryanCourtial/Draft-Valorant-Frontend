@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import { useAuth } from "../../hook/useAuth";
+import Navbar from "../../components/common/Navbar/Navbar";
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -17,20 +18,24 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="home-container">
-      <h1>Bienvenue sur Drafteur Valorant</h1>
-      <p>Sélectionnez vos agents et commencez à drafter votre équipe !</p>
-
+    <div className="container_home">
+      <img src="/iconValorant.png" alt="" />
       {user ? (
-        <div>
-          <p>
-            Connecté en tant que <strong>{user.username}</strong>
-          </p>
-          <button onClick={handleCreateRoom}>Créer une Room</button>
+        <div className="container-home-content">
+          <h1>
+            Hello <strong>{user.username}</strong>, Welcome to Valorant Drafter !
+          </h1>
+          <button onClick={handleCreateRoom}>Create Room</button>
         </div>
       ) : (
-        <button onClick={handleLogin}>Se connecter</button>
+        <div className="container-home-content">
+          <h1 className="container-home-content">
+            Hello, Welcome to Valorant Drafter !
+          </h1>
+          <button onClick={handleLogin}>Connection</button>
+        </div>
       )}
+        <Navbar />
     </div>
   );
 };

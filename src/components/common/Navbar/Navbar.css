@@ -1,0 +1,21 @@
+.container-navigation {
+    position: fixed;
+    right: 25px;
+    top: 25px;
+    width: 200px;
+    background-color: var(--color-black-surface-500);
+    border: solid 2px var(--color-white-500);
+}
+
+.container-navigation button {
+    width: 100%;
+    border-top: solid 2px var(--color-white-500);
+    border-bottom: solid 2px var(--color-white-500);
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+}
+
+.container-navigation a {
+    all: unset;
+}

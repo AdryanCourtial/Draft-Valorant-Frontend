@@ -16,12 +16,6 @@ const DraftPage = () => {
       <p>This is the draft page content.</p>
       <CreateRoom />
 
-      {infoUser?.drafts?.map((draft) => (
-      <button onClick={() => navigate(`/history/${draft.uuid}`)}>
-        Voir la partie du {new Date(draft.createdAt).toLocaleString()}
-      </button>
-    ))}
-
     </div>
   );
 };

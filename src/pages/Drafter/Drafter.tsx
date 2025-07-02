@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import './Drafter.css'
 import { useAtom } from "jotai";
-import { agentHoveredAtom, curentSideToPlayAtom, listAgentsAtom, listMapsAtom, listRolesAtom, roleInRoomAtom, togglePopinChooseSideAtom } from "../../atoms/drafter";
+import { curentSideToPlayAtom, listAgentsAtom, listMapsAtom, listRolesAtom, roleInRoomAtom, togglePopinChooseSideAtom } from "../../atoms/drafter";
 import { fetchAllAgents } from "../../api/agents";
 import ListDraftTeam from "../../components/Drafter/ListDraftTeam/ListDraftTeam";
 import MainDraftPanel from "../../components/Drafter/MainDraftPanel/MainDraftPanel";
@@ -16,8 +16,13 @@ import Popin from "../../components/Popin/Popin";
 import ButtonChooseSide from "../../components/Drafter/ButtonChooseSide/ButtonChooseSide";
 import { fetchAllMaps } from "../../api/map";
 import Loader from "../../components/common/Loader/Loader";
+import { getHistory } from "../../api/historyApi";
 
-const Drafter: React.FC = () => {
+interface Props {
+  isHistory?: boolean
+}
+
+const Drafter: React.FC<Props> = ({ isHistory }) => {
 
     const [, setListAgents] = useAtom(listAgentsAtom)
     const [, setListRoles] = useAtom(listRolesAtom)
@@ -26,16 +31,33 @@ const Drafter: React.FC = () => {
     const [togglePopinChooseSide, setTogglePopinChooseSide] = useAtom(togglePopinChooseSideAtom)
     const [_, setCurentSideToPlay] = useAtom(curentSideToPlayAtom)
     const [roleInRoom, setRoleInRoom] = useAtom(roleInRoomAtom)
-
-    const { handleGetRoom,  draftRoom, nextRound, handleIsReady, handleJoinSide} = useSocketDraft();
-
+    
+    
+    
+    const { handleGetRoom,  draftRoom, nextRound, handleIsReady, handleJoinSide, setDraftRoom } = useSocketDraft();
+    
     useEffect(() => {
+      
+      const urlUuid = window.location.pathname.split("/").pop();
 
       if (!draftRoom)  {
-        const urlUuid = window.location.pathname.split("/").pop();
         if (urlUuid) {
           handleGetRoom(urlUuid);
         }
+      }
+
+      if (isHistory) {
+        const draft = infoUser?.drafts?.find((value) => value.uuid === urlUuid)
+
+        console.log("TENTATIVE DE FETCH LA ROOM : ", draft?.uuid)
+
+        if (!draft) return
+        
+        getHistory(draft?.uuid).then((data) => {
+          console.log(data)
+          setDraftRoom(data)
+        });
+
       }
       
       Promise.all([ fetchAllAgents(), fetchAllRoles(), fetchAllMaps() ]).then(([agents, roles, maps]) => {
