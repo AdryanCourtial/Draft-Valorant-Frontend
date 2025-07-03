@@ -46,7 +46,7 @@ const ChooseCharactereDraft: React.FC = () => {
                     ))
                 }
                 <div className="container-search-character">
-                    <input value={search} onChange={handleChangeSearch} type="text" maxLength={15} placeholder="Rechercher un agent"/>
+                    <input value={search} onChange={handleChangeSearch} type="text" maxLength={15} placeholder="Find an agent"/>
                 </div>
             </div>
 

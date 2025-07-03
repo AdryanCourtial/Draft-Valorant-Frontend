@@ -10,7 +10,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Drafter from "./pages/Drafter/Drafter";
 import { ToastContainer } from "react-toastify";
 import RegisterPage from "./pages/Register/RegisterPage";
-import HistoryPage from "./pages/History/History";
+import HistoryPage from "./pages/History/history";
 
 function App() {
   useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/history" element={
             <ProtectedRoute>
-              <HistoryPage />
+              <HistoryPage/>
             </ProtectedRoute>}
           />
 

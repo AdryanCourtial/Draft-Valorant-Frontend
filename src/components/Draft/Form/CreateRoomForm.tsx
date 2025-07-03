@@ -35,7 +35,7 @@ const CreateRoomForm = ({ handleCreateRoom }: CreateRoomFormProps) => {
       >
         <option value="">-- Select a map --</option>
         {maps.map((map) => (
-          <option key={map.uuid} value={map.uuid}>
+          <option key={map.id} value={map.id}>
             {map.displayName}
           </option>
         ))}

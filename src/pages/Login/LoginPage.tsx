@@ -20,11 +20,11 @@ const LoginPage = () => {
     <div className="page-login">
       <LoginForm />
       <p>
-        Pas encore de compte ?{" "}
+        No account yet ?{" "}
         <a
           onClick={() => navigate("/register")}
         >
-          Créez-en un
+          Create one
         </a>
       </p>
     </div>

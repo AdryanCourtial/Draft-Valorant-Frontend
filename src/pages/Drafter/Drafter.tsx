@@ -49,8 +49,6 @@ const Drafter: React.FC<Props> = ({ isHistory }) => {
       if (isHistory) {
         const draft = infoUser?.drafts?.find((value) => value.uuid === urlUuid)
 
-        console.log("TENTATIVE DE FETCH LA ROOM : ", draft?.uuid)
-
         if (!draft) return
         
         getHistory(draft?.uuid).then((data) => {

@@ -22,7 +22,7 @@ const RegisterForm = () => {
 
   return (
     <div className="container-form-register">
-      <h2>Créer un compte</h2>
+      <h2>Create an account</h2>
       <input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
