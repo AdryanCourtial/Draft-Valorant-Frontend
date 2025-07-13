@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import './ItemChooseCharactere.css'
 import type { Agent } from "drafter-valorant-types";
 import { useAtom } from "jotai";
