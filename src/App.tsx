@@ -29,7 +29,6 @@ function App() {
 
           <Route path="/draft/history/:id" element={<Drafter isHistory />} />
 
-
           <Route
             path="/create-room"
             element={

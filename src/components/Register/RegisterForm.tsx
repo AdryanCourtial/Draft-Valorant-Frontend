@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
 import "./RegisterForm.css";
+import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const { handleRegister } = useAuth();
@@ -11,7 +12,15 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const submit = async () => {
+
+    const regex = /^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/g
     try {
+
+      if (!password.match(regex)) {
+        toast("Password is not strong enough, need minimum 8 caracteres, 1 upper case and 1 specials caractere")
+        return
+      }
+      
       await handleRegister(email, username, password);
       navigate("/login");
     } catch (err) {
